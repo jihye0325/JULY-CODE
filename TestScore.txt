@@ -1,0 +1,34 @@
+package ncs.test4;
+
+import java.util.Scanner;
+
+public class TestScore {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		
+		double[][] darr = new double[3][5];
+		
+		// 학생 0,1,2의 과목1,2,3 점수 입력받고 총점, 평균
+		for(int i = 0; i < darr.length; i++) {
+			double sum = 0.0;
+			double avg = 0.0;
+			for(int j = 0; j < 3; j++) {
+				System.out.print(i + "번 학생의 과목 " + (j + 1) + "의 점수 : ");
+			darr[i][j] = sc.nextDouble();
+			sum += darr[i][j];
+			}
+			darr[i][3] = sum;
+			darr[i][4] = sum / 3;
+		}
+		
+		// 출력
+		for(int i = 0; i < darr.length; i++) {
+			for(int j = 0; j < darr[i].length; j ++) {
+				System.out.print(darr[i][j] + "   ");
+				}
+			System.out.println();
+			}
+			System.out.println();
+		}
+	}

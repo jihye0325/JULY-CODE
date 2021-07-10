@@ -1,0 +1,30 @@
+package ncs.test5;
+
+public class Calculate {
+	
+	public Calculate() {}
+
+	
+	public int sum(int a, int b) {
+		int sum = a + b;
+		return sum;
+	}
+	
+	public int subtract(int a, int b) {
+		int subtract = a - b;
+		return subtract;
+	}
+
+	public int multiply(int a, int b) {
+		int multiply = a * b;
+		return multiply;
+	}
+	
+	public int divide(int a, int b) {
+		if(b == 0 || b < 0) {
+			return 0;
+		}
+		int divide = a / b;
+		return divide;
+	}
+}

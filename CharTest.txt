@@ -1,0 +1,23 @@
+package ncs.test1;
+
+import java.util.Scanner;
+
+public class CharTest {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		System.out.print("입력 : ");
+		String str = sc.nextLine();
+		
+		char[] ch = new char[str.length()];
+		// 대문자로 만들어서 배열에 담기
+		for(int i = 0; i < str.length(); i ++) {
+			ch[i] = str.toUpperCase().charAt(i);		
+		}
+		// 거꾸로 출력
+		for(int i = ch.length - 1; i >= 0; i--) {
+			System.out.print(ch[i]);
+		}
+	}
+
+}
