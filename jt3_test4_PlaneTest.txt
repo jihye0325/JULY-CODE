@@ -1,0 +1,34 @@
+package ncs.test4;
+
+public class PlaneTest {
+
+	public static void main(String[] args) {
+		Airplane air = new Airplane("L747", 1000);
+		Cargoplane car = new Cargoplane("C40", 1000);
+		
+		System.out.println("Plane      fuelSize");
+		System.out.println("---------------------");
+		System.out.println(air.getPlaneName() + "       " + air.getFuelSize());
+		System.out.println(car.getPlaneName() + "        " + car.getFuelSize());
+		
+		System.out.println("100 운항");
+		air.flight(100);
+		car.flight(100);
+		
+		System.out.println("Plane      fuelSize");
+		System.out.println("---------------------");
+		System.out.println(air.getPlaneName() + "       " + air.getFuelSize());
+		System.out.println(car.getPlaneName() + "        " + car.getFuelSize());		
+		
+		System.out.println("200 주유");
+		air.refuel(200);
+		car.refuel(200);
+		
+		System.out.println("Plane      fuelSize");
+		System.out.println("---------------------");
+		System.out.println(air.getPlaneName() + "       " + air.getFuelSize());
+		System.out.println(car.getPlaneName() + "        " + car.getFuelSize());		
+		
+	}
+
+}
