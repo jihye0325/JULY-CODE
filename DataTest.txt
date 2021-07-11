@@ -1,0 +1,27 @@
+package ncs.test2;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+
+public class DataTest {
+
+	public static void main(String[] args) {
+		GregorianCalendar birth = new GregorianCalendar(1987, 4, 27);
+		int byear = birth.get(Calendar.YEAR);
+		
+		GregorianCalendar today = new GregorianCalendar();
+		int year = today.get(Calendar.YEAR);
+				
+		SimpleDateFormat bsdf = new SimpleDateFormat("yyyy년 MMM dd일 E요일", Locale.KOREAN);
+		String fbirth = bsdf.format(birth.getTime());
+		System.out.println("생일 : " + fbirth);
+		
+		SimpleDateFormat tsdf = new SimpleDateFormat("yyyy년 MMM dd일");
+		String fToday = tsdf.format(today.getTime());
+		System.out.println("현재 : " + fToday);
+		System.out.println("나이 : 만 " + (year - byear) + " 세");
+	}
+
+}
