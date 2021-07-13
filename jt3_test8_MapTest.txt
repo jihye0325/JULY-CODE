@@ -1,0 +1,63 @@
+package ncs.test8;
+
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+public class MapTest {
+
+	public static void main(String[] args) {
+		Map<String, Inventory> map = new HashMap<String, Inventory>();
+		
+		map.put("삼성 갤럭시S7", new Inventory("삼성 갤럭시S7", new GregorianCalendar(2016,02,15).getTime(),30));
+		map.put("LG G5", new Inventory("LG G5", new GregorianCalendar(2016,01,25).getTime(),20));
+		map.put("애플 아이패드 Pro", new Inventory("애플 아이패드 Pro", new GregorianCalendar(2016,00,23).getTime(),15));
+		
+		Set<Entry<String, Inventory>> entrySet = map.entrySet();
+		Iterator<Entry<String, Inventory>> it = entrySet.iterator();
+		while(it.hasNext()) {
+			System.out.println(it.next().getValue());
+		}
+		
+		Inventory[] inv = new Inventory[map.size()];
+		Set<Entry<String, Inventory>> entry = map.entrySet();
+		Iterator<Entry<String, Inventory>> it2 = entry.iterator();
+		while(it2.hasNext()) {
+			for(int i = 0; i < map.size(); i++) {
+				inv[i] = it2.next().getValue();
+			}
+		}
+		
+		System.out.println();
+		System.out.println("출고 수량 10 적용시 -------------------------------------------");
+		for(int i = 0; i < inv.length; i++) {
+			try {
+				inv[i].setGetDate(new Date());
+				inv[i].setGetAmount(10);
+			} catch (AmountNotEnough e) {
+				e.printStackTrace();
+			}
+				System.out.println(inv[i]);
+		}
+		
+		System.out.println();
+		System.out.println("출고수량 부족시 -----------------------------------------------");
+		for(int i = 0; i < inv.length; i++) {
+			try {
+				inv[i].setGetDate(new Date());
+				inv[i].setGetAmount(50);
+			} catch (AmountNotEnough e) {
+				System.out.println("현재 재고가 부족합니다. 재고수량 확인하시기 바랍니다.");
+				break;
+			}
+				System.out.println(inv[i]);
+		}
+		
+		
+	}
+
+}
