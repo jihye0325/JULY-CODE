@@ -1,0 +1,58 @@
+package ncs.test7;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.InvalidPropertiesFormatException;
+import java.util.Properties;
+
+public class PropTest {
+
+	public static void main(String[] args) {
+		Properties prop = new Properties();
+		
+		prop.setProperty("0", "1 = apple,1200,3");
+		prop.setProperty("1", "2 = banana,2500,2");
+		prop.setProperty("2", "3 = grape,4500,5");
+		prop.setProperty("3", "4 = orange,800,10");
+		prop.setProperty("4", "5 = melon,5000,2");
+		
+		fileSave(prop);
+		fileOpen(prop);
+		
+	}
+	  
+	public static void fileSave(Properties p) {
+		try {
+			p.storeToXML(new FileOutputStream("data.xml"),"data");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void fileOpen(Properties p) {
+		Fruit fru[] = new Fruit[5];
+		
+		try {
+			p.loadFromXML(new FileInputStream("data.xml"));
+			
+			for(int i = 0; i < p.size(); i++) {
+				String str[] = p.getProperty(i + "").split(",");
+				fru[i] = new Fruit(str[0], Integer.parseInt(str[1]), Integer.parseInt(str[2]));
+				System.out.println(fru[i]);
+			}
+
+			
+		} catch (InvalidPropertiesFormatException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+}
