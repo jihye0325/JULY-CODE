@@ -1,0 +1,80 @@
+-- 상품 입고/출고에 따른 트리거 동작(재고량 수정)
+-- 상품 정보 테이블
+CREATE TABLE PRODUCT(
+    PCODE NUMBER PRIMARY KEY,   -- 상품 코드
+    PNAME VARCHAR2(30),         -- 상품명
+    BRAND VARCHAR2(30),         -- 브랜드명
+    PRICE NUMBER,               -- 가격
+    STOCK NUMBER DEFAULT 0      -- 재고
+);
+
+-- 상품 입출고 상세 이력 테이블
+CREATE TABLE PRO_DETAIL(
+    DCODE NUMBER PRIMARY KEY,   -- 상세 이력 코드
+    PCODE NUMBER,               -- 상품 코드
+    PDATE DATE,                 -- 상품 입/출고일
+    AMOUNT NUMBER,              -- 입/출고 수량
+    STATUS VARCHAR2(10),        -- 상품 상태(입고 OR 출고)
+    CHECK(STATUS IN('입고', '출고')),
+    FOREIGN KEY(PCODE) REFERENCES PRODUCT
+);
+
+-- 각 테이블의 PK가 되어줄 시퀀스 생성
+CREATE SEQUENCE SEQ_PCODE;
+CREATE SEQUENCE SEQ_DCODE;
+
+-- PRODUCT 테이블에 데이터 삽입
+INSERT INTO PRODUCT
+VALUES(SEQ_PCODE.NEXTVAL, '갤럭시', '삼성', 1200000, DEFAULT);
+INSERT INTO PRODUCT
+VALUES(SEQ_PCODE.NEXTVAL, '아이폰', '애플', 1300000, DEFAULT);
+INSERT INTO PRODUCT
+VALUES(SEQ_PCODE.NEXTVAL, '중국폰', '샤오미', 1400000, DEFAULT);
+
+SELECT * FROM PRODUCT;
+SELECT * FROM PRO_DETAIL;
+
+-- PRO_DETAIL 테이블에 데이터 삽입(INSERT) 시 STATUS 컬럼 값에 따른 PRODUCT 테이블 STOCK 컬럼 값 변경 트리거 생성
+CREATE OR REPLACE TRIGGER TRG_01
+AFTER INSERT ON PRO_DETAIL
+FOR EACH ROW
+BEGIN
+    -- 상품이 입고 된 경우
+    IF :NEW.STATUS = '입고'   --> :NEW.STATUS : SQL 반영 후 STATUS 값
+        THEN
+            -- PRODUCT 테이블에서 PCODE가 같은 상품의 재고량 증가
+            UPDATE PRODUCT
+                SET STOCK = STOCK + :NEW.AMOUNT
+              WHERE PCODE = :NEW.PCODE;
+    END IF;
+
+    IF :NEW.STATUS = '출고'   --> :NEW.STATUS : SQL 반영 후 STATUS 값
+        THEN
+            -- PRODUCT 테이블에서 PCODE가 같은 상품의 재고량 감소
+            UPDATE PRODUCT
+                SET STOCK = STOCK - :NEW.AMOUNT
+              WHERE PCODE = :NEW.PCODE;
+    END IF;
+END;
+/
+
+-- PCODE가 5인 상품 5개 입고
+INSERT INTO PRO_DETAIL
+VALUES(SEQ_DCODE.NEXTVAL, 5, SYSDATE, 5, '입고');
+
+SELECT * FROM PRO_DETAIL;
+
+SELECT * FROM PRODUCT;
+
+INSERT INTO PRO_DETAIL
+VALUES(SEQ_DCODE.NEXTVAL, 6, SYSDATE, 10, '입고');
+
+INSERT INTO PRO_DETAIL
+VALUES(SEQ_DCODE.NEXTVAL, 7, SYSDATE, 20, '입고');
+
+SELECT * FROM PRO_DETAIL;
+
+SELECT * FROM PRODUCT;
+
+INSERT INTO PRO_DETAIL
+VALUES(SEQ_DCODE.NEXTVAL, 7, SYSDATE, 15, '출고');
