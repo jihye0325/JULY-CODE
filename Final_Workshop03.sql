@@ -1,0 +1,6 @@
+-- 3
+SELECT
+       BOOK_NO
+     , BOOK_NM
+    FROM TB_BOOK
+ WHERE LENGTH(BOOK_NM) >= 25;
