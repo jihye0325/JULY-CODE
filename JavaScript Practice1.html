@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>실습1_기본문법</title>
+</head>
+<body>
+    <h1>실습1_기본문법</h1>
+
+    <h3>if문/삼항연산자</h3>
+    <p>
+        prompt로 "당신의 등급은 무엇입니까?" 라는 질문의 답을 받고 (기본 값 : 손님)
+        "손님"의 경우 "글 읽기", 
+        "일반 회원"의 경우 "글 읽기, 글 쓰기",
+        "운영자"의 경우 "글 읽기, 글 쓰기, 글 삭제" 
+        라는 값을 변수에 저장하여 아래와 같이 alert로 출력한다.<br>
+        Ex. 운영자의 경우 글 읽기, 글 쓰기, 글 삭제가 가능합니다.<br>
+        if문 사용 시, 삼항 연산자 사용 시의 코드를 각각 별도의 함수로 선언하여 내부에 작성하고
+        호출하여 수행 테스트를 한다.
+    </p>
+    
+    <h3>if문 답안</h3>
+    <script>
+        let answer = prompt("당신의 등급은 무엇입니까?", "손님");
+        if(answer == "손님") {
+            alert("손님의 경우 긁 읽기가 가능합니다.");
+        } else if(answer == "일반 회원") {
+            alert("일반 회원의 경우 긁 읽기, 글 쓰기가 가능합니다.");
+        } else if(answer == "운영자") {
+            alert("운영자의 경우 글 읽기, 글 쓰기, 글 삭제가 가능합니다.");
+        } else {
+            alert("다시 입력해주세요");
+        }
+    </script>
+
+    <h3>삼항연산자 답안</h3>
+    <script>
+        let answer2 = prompt("당신의 등급은 무엇입니까?", "손님");
+        (answer2=="손님") ? (alert("손님의 경우 긁 읽기가 가능합니다.")) 
+        : (answer2=="일반 회원") ? (alert("일반 회원의 경우 긁 읽기, 글 쓰기가 가능합니다."))
+        : (answer2=="운영자") ? (alert("운영자의 경우 글 읽기, 글 쓰기, 글 삭제가 가능합니다.")) 
+        : (alert("다시 입력해주세요"))
+    </script>
+
+    <h3>switch문으로 변환</h3>
+    <p>
+        아래 script를 switch문으로 변환한다. 
+    </p>
+    <script>
+        function checkBrowser(browser) {
+            if (browser == 'Edge') {
+                alert("Edge를 사용하고 계시네요!");
+            } else if (browser == 'Chrome'
+                || browser == 'Firefox'
+                || browser == 'Safari'
+                || browser == 'Opera') {
+                alert('저희 서비스가 지원하는 브라우저를 사용하고 계시네요.');
+            } else {
+                alert('현재 페이지가 괜찮아 보이길 바랍니다!');
+            }
+        }
+    </script> 
+
+    <h3>switch문 답안</h3>
+    <script>
+        function checkBrower(browser) {
+            switch(browser) {
+                case 'Edge':
+                    alert("Edge를 사용하고 계시네요!");
+                    break;
+                case 'Chrome':
+                case 'Firefox':
+                case 'Safari' :
+                case 'Opera' :
+                    alert('저희 서비스가 지원하는 브라우저를 사용하고 계시네요.');
+                    break;
+                default :
+                    alert('현재 페이지가 괜찮아 보이길 바랍니다!');
+            }
+        }
+
+        checkBrower('Safari');
+    </script>
+
+    <h3>반복문</h3>
+    <p>
+        아래의 for문(forLoop 함수)을 while(whileLoop 함수)문으로 변경한다.
+    </p>
+    <script>
+        function forLoop (num){
+            for (let i = 0; i < num; i++) {
+                console.log('number' + (i+1));
+            }
+        }
+        forLoop(prompt("반복할 횟수 입력해주세요")); 
+    </script>
+
+    <h3>while문 답안</h3>
+    <script>
+        function whileLoop (num) {
+            let i = 1;
+
+            while(i <= num) {
+                    console.log('number' + i);
+                    i++;
+            }
+        }
+        whileLoop(prompt("반복할 횟수 입력해주세요"));
+    </script>
+
+    <p>
+        "반드시 짝수를 입력하세요" 라는 prompt 출력 후
+        사용자가 짝수가 아닌 값을 입력한 경우 반복문을 사용해 동일한 prompt 창 출력한다.
+        사용자가 짝수를 입력하거나 취소 버튼을 누른 경우, 
+        혹은 아무것도 입력하지 않고 확인 버튼을 누른 경우엔 prompt 창 출력을 반복하지 않고
+        입력 받은 값 console로 출력한다.
+    </p>
+    <h3>답안</h3>
+    <script>
+        while(true) {
+            let input = prompt("반드시 짝수를 입력하세요");
+           
+            if(input % 2 != 0) {
+                continue;
+            } else if(input % 2 == 0 || input == true || input == false) {
+                console.log(input);
+                break;
+            }
+        }
+    </script>
+</body>
+</html>
